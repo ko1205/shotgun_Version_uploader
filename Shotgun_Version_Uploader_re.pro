@@ -25,8 +25,16 @@ HEADERS += \
     projectbutton.h \
     taskselectorview.h
 
+win32 {
+INCLUDEPATH += C:/Python27/include
+LIBS += -LC:/Python27/libs\
+        -lpython27
+}
+
+macx {
 INCLUDEPATH += /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/
 LIBS += -framework Python
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
