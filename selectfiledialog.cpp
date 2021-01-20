@@ -41,6 +41,6 @@ SelectFileDialog::SelectFileDialog(Core *core)
 
 void SelectFileDialog::clickSelectFile()
 {
-    selectedFile = QFileDialog::getOpenFileName(this,"Select File","movie (*.mov *.mp4 *.avi);;image (*.jpg *.jpeg *.png)");
+    selectedFile = QFileDialog::getOpenFileName(this,"Select File",".","movie (*.mov *.mp4 *.avi);;image (*.jpg *.jpeg *.png)");
     qDebug() << selectedFile;
 }
