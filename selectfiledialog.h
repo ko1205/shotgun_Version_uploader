@@ -28,6 +28,7 @@ public:
 
 private slots:
     void clickSelectFile();
+    void clickCancel();
 };
 
 #endif // SELECTFILEDIALOG_H

@@ -1,4 +1,5 @@
 #include "selectfiledialog.h"
+#include <QFileInfo>
 
 SelectFileDialog::SelectFileDialog(Core *core)
 {
@@ -24,7 +25,6 @@ SelectFileDialog::SelectFileDialog(Core *core)
 
     messageWindow = new QPlainTextEdit;
     messageWindow->setReadOnly(true);
-    messageWindow->appendHtml("<font color=blue>Searching........... </font>");
 
 
     layout = new QGridLayout;
@@ -42,5 +42,22 @@ SelectFileDialog::SelectFileDialog(Core *core)
 void SelectFileDialog::clickSelectFile()
 {
     selectedFile = QFileDialog::getOpenFileName(this,"Select File",".","movie (*.mov *.mp4 *.avi);;image (*.jpg *.jpeg *.png)");
+    QFileInfo check_file(selectedFile);
+    if (check_file.exists() && check_file.isFile()) {
+        messageWindow->appendHtml("<font color=blue> Selected File : " + selectedFile + "</font>");
+        disconnect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickSelectFile()));
+        connect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickCancel()));
+        fileSelectBtn->setText("Cancel");
+
+    }
     qDebug() << selectedFile;
+}
+
+void SelectFileDialog::clickCancel()
+{
+
+    fileSelectBtn->setText("Select Upload File");
+    disconnect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickCancel()));
+    connect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickSelectFile()));
+
 }

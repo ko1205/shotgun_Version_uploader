@@ -89,6 +89,7 @@ void TaskSelectorView::rightListViewDoubleClick(QListWidgetItem *item)
     qDebug() << item->text();
     core->setRightViewCurrent(item->text());
     SelectFileDialog *dialog = new SelectFileDialog(core);
+    dialog->resize(600,500);
     dialog->exec();
 
 }
