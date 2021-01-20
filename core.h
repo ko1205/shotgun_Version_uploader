@@ -16,11 +16,14 @@ private:
     PyObject *pFunc;
     PyObject *pSG;
 
+    QString login;
     int selectedProject;
+    QString SelectedProjectName;
     int selectedElement;
 
     QString leftViewCurrent;
     QString centerViewCurrent;
+    QString rightViewCurrent;
 
     void passingProjectList(PyObject *list);
 
@@ -32,7 +35,7 @@ public:
     ~Core();
     bool connectSite(QString site, QString login, QString passwd);
     void readProjcetList();
-    void setSelectedProject(int id);
+    void setSelectedProject(int id, QString name);
     int readSelectedProject();
     void setElement(int element);
 
@@ -45,6 +48,7 @@ public:
 
     void setLeftViewCurrent(QString text);
     void setCenterViewCurrent(QString text);
+    void setRightViewCurrent(QString text);
 
 
 

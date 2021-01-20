@@ -15,6 +15,7 @@ SOURCES += \
     dialog.cpp \
     mainwindow.cpp \
     projectbutton.cpp \
+    selectfiledialog.cpp \
     taskselectorview.cpp
 
 HEADERS += \
@@ -23,6 +24,7 @@ HEADERS += \
     elementselector.h \
     mainwindow.h \
     projectbutton.h \
+    selectfiledialog.h \
     taskselectorview.h
 
 win32 {

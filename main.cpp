@@ -10,6 +10,8 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+//#include <QCoreApplication>
+//#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -18,5 +20,6 @@ int main(int argc, char *argv[])
     MainWindow mainWindow(&core);
     Dialog dialog(&core,&mainWindow);
     dialog.show();
+//    qDebug() << QCoreApplication::applicationFilePath();
     return a.exec();
 }

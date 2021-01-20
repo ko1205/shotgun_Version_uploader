@@ -38,6 +38,8 @@ bool Core::connectSite(QString site, QString login, QString passwd)
 {
     qDebug() << site << login << passwd;
 
+    this->login = login;
+
     PyObject *pySite, *pyLogin, *pyPasswd, *pArgs ;
 
     pySite =PyString_FromString(site.toLocal8Bit());
@@ -224,9 +226,10 @@ QStringList Core::getShotTaskList()
     return taskList;
 }
 
-void Core::setSelectedProject(int id)
+void Core::setSelectedProject(int id, QString name)
 {
     selectedProject = id;
+    SelectedProjectName = name;
 }
 
 int Core::readSelectedProject()
@@ -248,6 +251,11 @@ void Core::setLeftViewCurrent(QString text)
 void Core::setCenterViewCurrent(QString text)
 {
     centerViewCurrent = text;
+}
+
+void Core::setRightViewCurrent(QString text)
+{
+    rightViewCurrent = text;
 }
 
 

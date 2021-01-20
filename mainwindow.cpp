@@ -49,7 +49,7 @@ void MainWindow::readProjectList()
 void MainWindow::changeWindow(QString &name, int id)
 {
     qDebug() << name << id;
-    core->setSelectedProject(id);
+    core->setSelectedProject(id, name);
     creatElementWindow();
 //    elementSelector = new ElementSelector;
 //    connect(elementSelector,SIGNAL(goToProjectSelector()),this,SLOT(readProjectList()));

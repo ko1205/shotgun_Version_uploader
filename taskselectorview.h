@@ -31,6 +31,7 @@ private slots:
     void clickBackButton();
     void leftListViewSelected(QString currentText);
     void centerListViewSelected(QString currentText);
+    void rightListViewDoubleClick(QListWidgetItem *item);
 
 };
 

@@ -1,5 +1,7 @@
 #include "taskselectorview.h"
 #include "QGridLayout"
+#include <QListWidgetItem>
+#include "selectfiledialog.h"
 
 TaskSelectorView::TaskSelectorView(Core *core, int element, QWidget *parent) : QWidget(parent)
 {
@@ -27,6 +29,7 @@ TaskSelectorView::TaskSelectorView(Core *core, int element, QWidget *parent) : Q
     connect(backButton,SIGNAL(clicked(bool)),this,SLOT(clickBackButton()));
     connect(leftListView,SIGNAL(currentTextChanged(QString)),this,SLOT(leftListViewSelected(QString)));
     connect(centerListView,SIGNAL(currentTextChanged(QString)),this,SLOT(centerListViewSelected(QString)));
+    connect(rightListView,SIGNAL(itemDoubleClicked(QListWidgetItem*)),this,SLOT(rightListViewDoubleClick(QListWidgetItem*)));
 }
 
 void TaskSelectorView::clickBackButton()
@@ -78,5 +81,14 @@ void TaskSelectorView::centerListViewSelected(QString currentText)
         QStringList TaskContentList = core->getShotTaskList();
         rightListView->addItems(TaskContentList);
     }
+
+}
+
+void TaskSelectorView::rightListViewDoubleClick(QListWidgetItem *item)
+{
+    qDebug() << item->text();
+    core->setRightViewCurrent(item->text());
+    SelectFileDialog *dialog = new SelectFileDialog(core);
+    dialog->exec();
 
 }
