@@ -18,7 +18,7 @@ private:
 
     QString login;
     int selectedProject;
-    QString SelectedProjectName;
+    QString selectedProjectName;
     int selectedElement;
 
     QString leftViewCurrent;
@@ -49,6 +49,13 @@ public:
     void setLeftViewCurrent(QString text);
     void setCenterViewCurrent(QString text);
     void setRightViewCurrent(QString text);
+
+    QString getProjectName();
+    QString getLoginUser();
+    int getElementType();
+    QString getLeftViewCurrent();
+    QString getCenterViewCurrent();
+    QString getRightViewCurrent();
 
 
 

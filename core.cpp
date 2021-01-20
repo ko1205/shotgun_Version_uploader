@@ -229,7 +229,7 @@ QStringList Core::getShotTaskList()
 void Core::setSelectedProject(int id, QString name)
 {
     selectedProject = id;
-    SelectedProjectName = name;
+    selectedProjectName = name;
 }
 
 int Core::readSelectedProject()
@@ -259,3 +259,32 @@ void Core::setRightViewCurrent(QString text)
 }
 
 
+QString Core::getProjectName()
+{
+    return selectedProjectName;
+}
+
+QString Core::getLoginUser()
+{
+    return login;
+}
+
+int Core::getElementType()
+{
+    return selectedElement;
+}
+
+QString Core::getLeftViewCurrent()
+{
+    return leftViewCurrent;
+}
+
+QString Core::getCenterViewCurrent()
+{
+    return centerViewCurrent;
+}
+
+QString Core::getRightViewCurrent()
+{
+    return rightViewCurrent;
+}
