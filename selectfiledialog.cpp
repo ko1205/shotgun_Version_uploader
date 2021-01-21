@@ -42,7 +42,7 @@ SelectFileDialog::SelectFileDialog(Core *core)
 
 SelectFileDialog::~SelectFileDialog()
 {
-    thread->status = false;
+    thread->terminate();
     qDebug() << "diallog close";
 }
 
@@ -56,7 +56,7 @@ void SelectFileDialog::clickSelectFile()
         disconnect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickSelectFile()));
         connect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickCancel()));
         fileSelectBtn->setText("Cancel");
-        thread = new JobThread(this);
+        thread = new JobThread(core, this);
         thread->start();
 
     }
@@ -65,9 +65,8 @@ void SelectFileDialog::clickSelectFile()
 
 void SelectFileDialog::clickCancel()
 {
-//    thread->status = false;
-//    delete thread;
     thread->terminate();
+    delete thread;
     fileSelectBtn->setText("Select Upload File");
     disconnect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickCancel()));
     connect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickSelectFile()));

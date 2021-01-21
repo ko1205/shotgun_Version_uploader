@@ -1,9 +1,9 @@
 #include "jobthread.h"
 
-JobThread::JobThread(QObject *parent)
+JobThread::JobThread(Core *core,QObject *parent)
     :QThread(parent)
 {
-
+    this->core = core;
 }
 
 JobThread::~JobThread()
@@ -13,11 +13,5 @@ JobThread::~JobThread()
 
 void JobThread::run()
 {
-    int count;
-    status = true;
-    while (status) {
-        qDebug() << "ThreadRun" << count;
-        count++;
-    }
-    qDebug() << "run Process";
+
 }

@@ -3,18 +3,18 @@
 
 #include <QThread>
 #include <QDebug>
+#include "core.h"
 
 class JobThread : public QThread
 {
     Q_OBJECT
 public:
-    bool status;
-
-    JobThread(QObject *parent = 0);
+    JobThread(Core *core ,QObject *parent = 0);
     ~JobThread();
 
 private:
     void run() override;
+    Core *core;
 };
 
 #endif // JOBTHREAD_H
