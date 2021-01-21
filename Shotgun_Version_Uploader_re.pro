@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     core.cpp \
     elementselector.cpp \
+    jobthread.cpp \
     main.cpp \
     dialog.cpp \
     mainwindow.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     core.h \
     dialog.h \
     elementselector.h \
+    jobthread.h \
     mainwindow.h \
     projectbutton.h \
     selectfiledialog.h \

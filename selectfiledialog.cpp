@@ -1,5 +1,7 @@
 #include "selectfiledialog.h"
 #include <QFileInfo>
+#include "jobthread.h"
+
 
 SelectFileDialog::SelectFileDialog(Core *core)
 {
@@ -39,6 +41,7 @@ SelectFileDialog::SelectFileDialog(Core *core)
 
 }
 
+
 void SelectFileDialog::clickSelectFile()
 {
     selectedFile = QFileDialog::getOpenFileName(this,"Select File",".","movie (*.mov *.mp4 *.avi);;image (*.jpg *.jpeg *.png)");
@@ -48,6 +51,8 @@ void SelectFileDialog::clickSelectFile()
         disconnect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickSelectFile()));
         connect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickCancel()));
         fileSelectBtn->setText("Cancel");
+        JobThread *thread = new JobThread(this);
+        thread->start();
 
     }
     qDebug() << selectedFile;
