@@ -1,6 +1,5 @@
 #include "selectfiledialog.h"
 #include <QFileInfo>
-#include "jobthread.h"
 
 
 SelectFileDialog::SelectFileDialog(Core *core)
@@ -41,6 +40,12 @@ SelectFileDialog::SelectFileDialog(Core *core)
 
 }
 
+SelectFileDialog::~SelectFileDialog()
+{
+    thread->status = false;
+    qDebug() << "diallog close";
+}
+
 
 void SelectFileDialog::clickSelectFile()
 {
@@ -51,7 +56,7 @@ void SelectFileDialog::clickSelectFile()
         disconnect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickSelectFile()));
         connect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickCancel()));
         fileSelectBtn->setText("Cancel");
-        JobThread *thread = new JobThread(this);
+        thread = new JobThread(this);
         thread->start();
 
     }
@@ -60,7 +65,9 @@ void SelectFileDialog::clickSelectFile()
 
 void SelectFileDialog::clickCancel()
 {
-
+//    thread->status = false;
+//    delete thread;
+    thread->terminate();
     fileSelectBtn->setText("Select Upload File");
     disconnect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickCancel()));
     connect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickSelectFile()));

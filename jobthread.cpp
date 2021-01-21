@@ -13,8 +13,11 @@ JobThread::~JobThread()
 
 void JobThread::run()
 {
+    int count;
     status = true;
-//    while (status) {
-//        qDebug() << "ThreadRun";
-//    }
+    while (status) {
+        qDebug() << "ThreadRun" << count;
+        count++;
+    }
+    qDebug() << "run Process";
 }

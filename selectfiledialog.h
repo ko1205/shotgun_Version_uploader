@@ -9,6 +9,7 @@
 #include <QPlainTextEdit>
 #include <QFileDialog>
 #include <QDebug>
+#include "jobthread.h"
 
 class SelectFileDialog : public QDialog
 {
@@ -21,10 +22,12 @@ private:
     QPushButton *fileSelectBtn;
     QPlainTextEdit *messageWindow;
     QString selectedFile;
+    JobThread *thread;
 //    QFileDialog *fileDialog;
 
 public:
     SelectFileDialog(Core *core);
+    ~SelectFileDialog();
 
 private slots:
     void clickSelectFile();

@@ -91,5 +91,5 @@ void TaskSelectorView::rightListViewDoubleClick(QListWidgetItem *item)
     SelectFileDialog *dialog = new SelectFileDialog(core);
     dialog->resize(600,500);
     dialog->exec();
-
+    delete dialog;
 }
