@@ -226,6 +226,17 @@ QStringList Core::getShotTaskList()
     return taskList;
 }
 
+bool Core::uploadMovie(QString mp4, QString webm, QString thumbnail)
+{
+    if(selectedElement == ASSET)
+    {
+
+    }else if(selectedElement == SHOT){
+
+    }
+    return true;
+}
+
 void Core::setSelectedProject(int id, QString name)
 {
     selectedProject = id;

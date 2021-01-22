@@ -46,6 +46,8 @@ public:
     QStringList getAssetTaskList();
     QStringList getShotTaskList();
 
+    bool uploadMovie(QString mp4,QString webm, QString thumbnail);
+
     void setLeftViewCurrent(QString text);
     void setCenterViewCurrent(QString text);
     void setRightViewCurrent(QString text);

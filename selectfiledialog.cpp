@@ -1,4 +1,5 @@
 #include "selectfiledialog.h"
+#include <QMessageBox>
 
 
 SelectFileDialog::SelectFileDialog(Core *core)
@@ -82,6 +83,7 @@ void SelectFileDialog::clickSelectFile()
 //        QString
 
         transcodingStep = 0;
+        outputFile.clear();
         transeCodingProcess();
 //        process->start("ffmpeg -i "+selectedFile+" -f mp4 ./test.mp4");
 //        process->waitForFinished();
@@ -128,7 +130,7 @@ void SelectFileDialog::transeCodingProcess()
     QString baseName = fileInfo.baseName();
 
     QStringList arg;
-    outputFile.clear();
+//    outputFile.clear();
 
 //    QDir tmpDir("./tmp");
     switch(transcodingStep)
@@ -142,7 +144,7 @@ void SelectFileDialog::transeCodingProcess()
             transcodingStep = 1;
             arg.clear();
             qDebug() << arg;
-            outputFile << tmpDir.absolutePath()+ QDir::separator() + baseName + outFormat[0];
+            outputFile.append(tmpDir.absolutePath()+ QDir::separator() + baseName + outFormat[0]);
             break;
 
          case 1:
@@ -153,7 +155,7 @@ void SelectFileDialog::transeCodingProcess()
             process->start("ffmpeg", arg);
             transcodingStep = 2;
             arg.clear();
-            outputFile << tmpDir.absolutePath()+ QDir::separator() + baseName + outFormat[0];
+            outputFile.append( tmpDir.absolutePath()+ QDir::separator() + baseName + outFormat[1]);
 
             break;
 
@@ -164,9 +166,23 @@ void SelectFileDialog::transeCodingProcess()
             process->start("ffmpeg", arg);
             transcodingStep = 3;
             arg.clear();
-            outputFile << tmpDir.absolutePath()+ QDir::separator() + baseName + outFormat[0];
+            outputFile.append( tmpDir.absolutePath()+ QDir::separator() + baseName + outFormat[2]);
             break;
+
         case 3:
+            {
+                int select = QMessageBox::warning(this,"Warnign","Shotgun에 업로드 하시겠습니까?\n 업로드 중에는 취소 할수 없습니다.",QMessageBox::Yes | QMessageBox::No);
+                if(select == QMessageBox::Yes)
+                {
+                    qDebug() << "OK button Click";
+                    fileSelectBtn->setDisabled(true);
+                }else{
+                    clickCancel();
+                }
+            }
+            break;
+
+        case 4:
             break;
     }
 }
