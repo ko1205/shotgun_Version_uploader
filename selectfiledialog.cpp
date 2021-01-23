@@ -84,6 +84,7 @@ void SelectFileDialog::clickSelectFile()
 
         transcodingStep = 0;
         outputFile.clear();
+        core->setSelectedFile(selectedFile);
         transeCodingProcess();
 //        process->start("ffmpeg -i "+selectedFile+" -f mp4 ./test.mp4");
 //        process->waitForFinished();
@@ -160,7 +161,6 @@ void SelectFileDialog::transeCodingProcess()
             break;
 
         case 2:
-//        ffmpeg -ss 00:00:00 -i KakaoTalk_Video_2020-12-31-14-44-29-1.mp4 -vframes 1 -q:v 2 output.jpg
             arg << "-i" << selectedFile << "-ss" << "00:00:00" << "-vframes" << "1" << "-q:v" << "2";
             arg << tmpDir.absolutePath()+ QDir::separator() + baseName + outFormat[2];
             process->start("ffmpeg", arg);
@@ -176,6 +176,9 @@ void SelectFileDialog::transeCodingProcess()
                 {
                     qDebug() << "OK button Click";
                     fileSelectBtn->setDisabled(true);
+                    messageWindow->append("Uploading Review Version");
+                    core->uploadMovie(outputFile, baseName);
+                    clickCancel();
                 }else{
                     clickCancel();
                 }

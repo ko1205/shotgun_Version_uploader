@@ -25,6 +25,8 @@ private:
     QString centerViewCurrent;
     QString rightViewCurrent;
 
+    QString selectedFile;
+
     void passingProjectList(PyObject *list);
 
 
@@ -46,11 +48,13 @@ public:
     QStringList getAssetTaskList();
     QStringList getShotTaskList();
 
-    bool uploadMovie(QString mp4,QString webm, QString thumbnail);
+    bool uploadMovie(QStringList outputFile, QString basename);
 
     void setLeftViewCurrent(QString text);
     void setCenterViewCurrent(QString text);
     void setRightViewCurrent(QString text);
+
+    void setSelectedFile(QString filePath);
 
     QString getProjectName();
     QString getLoginUser();

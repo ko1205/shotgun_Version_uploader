@@ -3,8 +3,12 @@ import shotgun_api3
 
 def connect(url,login,passwd):
     sg = shotgun_api3.Shotgun(url,login=login,password=passwd)
+    result = findProjectList(sg)
     print('OK')
-    return sg
+    if(result):
+        return sg
+    else:
+        return NULL
 
 def findProjectList(sg):
     result = sg.find("Project", [['archived','is',False],['is_template','is',False],['sg_status','is','Active']], ['name','is_template','sg_status'])
@@ -76,3 +80,43 @@ def findShotTaskList(sg,project_id,shot_code):
 
     print taskList
     return taskList    
+
+
+def uploadShotVersion(sg, project_id, shot_code, task, basename ,orgMov, mp4, webm, thumbnail):
+    print(orgMov)
+    print(mp4)
+    shot = sg.find_one("Shot",[['project','is',{'type':'Project','id':project_id}],['code','is',shot_code]],['code'])
+
+    task = sg.find_one("Task",[['project','is',{'type':'Project','id':project_id}],['entity','is',shot],['content','is',task]])
+
+    data = {'project':{'type':'Project','id':project_id},
+            'code': basename,
+            'sg_path_to_movie': orgMov,
+            'entity':shot,
+            'sg_task':task
+            }
+    version = sg.create("Version",data)
+    sg.upload("Version", version['id'], orgMov, 'sg_uploaded_movie')
+    sg.upload("Version", version['id'], mp4, 'sg_uploaded_movie_mp4')
+    sg.upload("Version", version['id'], webm, 'sg_uploaded_movie_webm')
+    sg.upload_thumbnail("Version",version['id'],thumbnail)
+
+
+def uploadAssetVersion(sg, project_id, asset_code, task, basename ,orgMov, mp4, webm, thumbnail):
+    print(orgMov)
+    print(mp4)
+    asset = sg.find_one("Asset",[['project','is',{'type':'Project','id':project_id}],['code','is',asset_code]],['code'])
+
+    task = sg.find_one("Task",[['project','is',{'type':'Project','id':project_id}],['entity','is',asset],['content','is',task]])
+
+    data = {'project':{'type':'Project','id':project_id},
+            'code': basename,
+            'sg_path_to_movie': orgMov,
+            'entity':asset,
+            'sg_task':task
+            }
+    version = sg.create("Version",data)
+    sg.upload("Version", version['id'], orgMov, 'sg_uploaded_movie')
+    sg.upload("Version", version['id'], mp4, 'sg_uploaded_movie_mp4')
+    sg.upload("Version", version['id'], webm, 'sg_uploaded_movie_webm')
+    sg.upload_thumbnail("Version",version['id'],thumbnail)

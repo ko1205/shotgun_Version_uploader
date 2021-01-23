@@ -226,13 +226,60 @@ QStringList Core::getShotTaskList()
     return taskList;
 }
 
-bool Core::uploadMovie(QString mp4, QString webm, QString thumbnail)
+bool Core::uploadMovie(QStringList outputFile, QString basename)
 {
     if(selectedElement == ASSET)
     {
+        qDebug() << "Shot Version upLoad";
+        pFunc = PyObject_GetAttrString(pModule,"uploadAssetVersion");
+        PyObject *pArgs = PyTuple_New(9);
+        PyObject *projectID = PyInt_FromSize_t(selectedProject);
+        PyObject *assetCode = PyString_FromString(centerViewCurrent.toLocal8Bit());
+        PyObject *taskContent = PyString_FromString(rightViewCurrent.toLocal8Bit());
+        PyObject *pybasename = PyString_FromString(basename.toLocal8Bit());
+        PyObject *orgMovie = PyString_FromString(selectedFile.toLocal8Bit());
+        PyObject *mp4 = PyString_FromString(outputFile.at(0).toLocal8Bit());
+        PyObject *webm = PyString_FromString(outputFile.at(1).toLocal8Bit());
+        PyObject *thumbnail = PyString_FromString(outputFile.at(2).toLocal8Bit());
+
+        PyTuple_SetItem(pArgs,0,pSG);
+        PyTuple_SetItem(pArgs,1,projectID);
+        PyTuple_SetItem(pArgs,2,assetCode);
+        PyTuple_SetItem(pArgs,3,taskContent);
+        PyTuple_SetItem(pArgs,4,pybasename);
+        PyTuple_SetItem(pArgs,5,orgMovie);
+        PyTuple_SetItem(pArgs,6,mp4);
+        PyTuple_SetItem(pArgs,7,webm);
+        PyTuple_SetItem(pArgs,8,thumbnail);
+
+        PyObject *result = PyObject_CallObject(pFunc,pArgs);
+        qDebug() << "upload fin";
 
     }else if(selectedElement == SHOT){
+        qDebug() << "Shot Version upLoad";
+        pFunc = PyObject_GetAttrString(pModule,"uploadShotVersion");
+        PyObject *pArgs = PyTuple_New(9);
+        PyObject *projectID = PyInt_FromSize_t(selectedProject);
+        PyObject *shotCode = PyString_FromString(centerViewCurrent.toLocal8Bit());
+        PyObject *taskContent = PyString_FromString(rightViewCurrent.toLocal8Bit());
+        PyObject *pybasename = PyString_FromString(basename.toLocal8Bit());
+        PyObject *orgMovie = PyString_FromString(selectedFile.toLocal8Bit());
+        PyObject *mp4 = PyString_FromString(outputFile.at(0).toLocal8Bit());
+        PyObject *webm = PyString_FromString(outputFile.at(1).toLocal8Bit());
+        PyObject *thumbnail = PyString_FromString(outputFile.at(2).toLocal8Bit());
 
+        PyTuple_SetItem(pArgs,0,pSG);
+        PyTuple_SetItem(pArgs,1,projectID);
+        PyTuple_SetItem(pArgs,2,shotCode);
+        PyTuple_SetItem(pArgs,3,taskContent);
+        PyTuple_SetItem(pArgs,4,pybasename);
+        PyTuple_SetItem(pArgs,5,orgMovie);
+        PyTuple_SetItem(pArgs,6,mp4);
+        PyTuple_SetItem(pArgs,7,webm);
+        PyTuple_SetItem(pArgs,8,thumbnail);
+
+        PyObject *result = PyObject_CallObject(pFunc,pArgs);
+        qDebug() << "upload fin";
     }
     return true;
 }
@@ -267,6 +314,11 @@ void Core::setCenterViewCurrent(QString text)
 void Core::setRightViewCurrent(QString text)
 {
     rightViewCurrent = text;
+}
+
+void Core::setSelectedFile(QString filePath)
+{
+    selectedFile = filePath;
 }
 
 
