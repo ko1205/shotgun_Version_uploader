@@ -12,8 +12,8 @@ Dialog::Dialog(Core *core, MainWindow *mainWindow, QWidget *parent)
     loginLabel = new QLabel("Login :");
     passwdLabel = new QLabel("Password :");
     urlEdit = new QLineEdit("https://wswg.shotgunstudio.com");
-    loginEdit = new QLineEdit("cgilh");
-    passwdEdit = new QLineEdit("goemffjA12");
+    loginEdit = new QLineEdit("");
+    passwdEdit = new QLineEdit("");
     passwdEdit->setEchoMode(QLineEdit::Password);
     connectButton = new QPushButton("Connect");
 
@@ -61,5 +61,7 @@ void Dialog::connectSite()
         this->hide();
         mainWindow->readProjectList();
         mainWindow->show();
+    }else{
+        QMessageBox::warning(this,"","Login failed. Please verify you are using the correct username and password combination",QMessageBox::Yes);
     }
 }

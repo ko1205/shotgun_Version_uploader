@@ -6,16 +6,15 @@ Core::Core(QObject *parent) : QObject(parent)
     Py_Initialize();
     PyRun_SimpleString("import sys\n"
                        "sys.path.insert(0,'')\n");
-    PyObject *pName = PyString_FromString("run");
-    pModule = PyImport_Import(pName);
-    Py_DECREF(pName);
-    if(pModule != NULL){
-        qDebug() << "Shotgun Module OK";
-        pFunc = PyObject_GetAttrString(pModule,"connect");
-        if(pFunc != NULL){
-            qDebug() << "Func OK";
-        }
-    }
+
+//    Py_DECREF(pName);
+//    if(pModule != NULL){
+//        qDebug() << "Shotgun Module OK";
+////        pFunc = PyObject_GetAttrString(pModule,"connect");
+//        if(pFunc != NULL){
+//            qDebug() << "Func OK";
+//        }
+//    }
 
 
 }
@@ -36,6 +35,9 @@ Core::~Core()
 
 bool Core::connectSite(QString site, QString login, QString passwd)
 {
+    PyObject *pName = PyString_FromString("run");
+    pModule = PyImport_Import(pName);
+    pFunc = PyObject_GetAttrString(pModule,"connect");
     qDebug() << site << login << passwd;
 
     this->login = login;
@@ -51,14 +53,13 @@ bool Core::connectSite(QString site, QString login, QString passwd)
     PyTuple_SetItem(pArgs,0,pySite);
     PyTuple_SetItem(pArgs,1,pyLogin);
     PyTuple_SetItem(pArgs,2,pyPasswd);
-
     pSG = PyObject_CallObject(pFunc,pArgs);
     Py_DECREF(pySite);
     Py_DECREF(pyLogin);
     Py_DECREF(pyPasswd);
 //    Py_DECREF(pArgs);
     if(pSG != NULL){
-        qDebug() << "SG OK";
+//        qDebug() << "SG OK";
         return true;
     }else{
         return false;
