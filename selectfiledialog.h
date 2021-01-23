@@ -42,6 +42,7 @@ private slots:
     void writeMessage();
 
     void transeCodingProcess();
+    void imageCodingProcess();
 };
 
 #endif // SELECTFILEDIALOG_H

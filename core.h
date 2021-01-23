@@ -49,6 +49,7 @@ public:
     QStringList getShotTaskList();
 
     bool uploadMovie(QStringList outputFile, QString basename);
+    bool uploadImage(QString basename);
 
     void setLeftViewCurrent(QString text);
     void setCenterViewCurrent(QString text);

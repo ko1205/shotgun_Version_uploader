@@ -82,29 +82,7 @@ def findShotTaskList(sg,project_id,shot_code):
     return taskList    
 
 
-def uploadShotVersion(sg, project_id, shot_code, task, basename ,orgMov, mp4, webm, thumbnail):
-    print(orgMov)
-    print(mp4)
-    shot = sg.find_one("Shot",[['project','is',{'type':'Project','id':project_id}],['code','is',shot_code]],['code'])
-
-    task = sg.find_one("Task",[['project','is',{'type':'Project','id':project_id}],['entity','is',shot],['content','is',task]])
-
-    data = {'project':{'type':'Project','id':project_id},
-            'code': basename,
-            'sg_path_to_movie': orgMov,
-            'entity':shot,
-            'sg_task':task
-            }
-    version = sg.create("Version",data)
-    sg.upload("Version", version['id'], orgMov, 'sg_uploaded_movie')
-    sg.upload("Version", version['id'], mp4, 'sg_uploaded_movie_mp4')
-    sg.upload("Version", version['id'], webm, 'sg_uploaded_movie_webm')
-    sg.upload_thumbnail("Version",version['id'],thumbnail)
-
-
 def uploadAssetVersion(sg, project_id, asset_code, task, basename ,orgMov, mp4, webm, thumbnail):
-    print(orgMov)
-    print(mp4)
     asset = sg.find_one("Asset",[['project','is',{'type':'Project','id':project_id}],['code','is',asset_code]],['code'])
 
     task = sg.find_one("Task",[['project','is',{'type':'Project','id':project_id}],['entity','is',asset],['content','is',task]])
@@ -113,10 +91,63 @@ def uploadAssetVersion(sg, project_id, asset_code, task, basename ,orgMov, mp4, 
             'code': basename,
             'sg_path_to_movie': orgMov,
             'entity':asset,
-            'sg_task':task
+            'sg_task':task,
+            'sg_status_list': 'rev'
             }
     version = sg.create("Version",data)
     sg.upload("Version", version['id'], orgMov, 'sg_uploaded_movie')
     sg.upload("Version", version['id'], mp4, 'sg_uploaded_movie_mp4')
     sg.upload("Version", version['id'], webm, 'sg_uploaded_movie_webm')
     sg.upload_thumbnail("Version",version['id'],thumbnail)
+
+
+def uploadShotVersion(sg, project_id, shot_code, task, basename ,orgMov, mp4, webm, thumbnail):
+    shot = sg.find_one("Shot",[['project','is',{'type':'Project','id':project_id}],['code','is',shot_code]],['code'])
+
+    task = sg.find_one("Task",[['project','is',{'type':'Project','id':project_id}],['entity','is',shot],['content','is',task]])
+
+    data = {'project':{'type':'Project','id':project_id},
+            'code': basename,
+            'sg_path_to_movie': orgMov,
+            'entity':shot,
+            'sg_task':task,
+            'sg_status_list': 'rev'
+            }
+    version = sg.create("Version",data)
+    sg.upload("Version", version['id'], orgMov, 'sg_uploaded_movie')
+    sg.upload("Version", version['id'], mp4, 'sg_uploaded_movie_mp4')
+    sg.upload("Version", version['id'], webm, 'sg_uploaded_movie_webm')
+    sg.upload_thumbnail("Version",version['id'],thumbnail)
+
+def uploadAssetVersionImage(sg, project_id, asset_code, task, basename, orgImage):
+    asset = sg.find_one("Asset",[['project','is',{'type':'Project','id':project_id}],['code','is',asset_code]],['code'])
+
+    task = sg.find_one("Task",[['project','is',{'type':'Project','id':project_id}],['entity','is',asset],['content','is',task]])
+
+    data = {'project':{'type':'Project','id':project_id},
+        'code': basename,
+        'sg_path_to_movie': orgImage,
+        'entity':asset,
+        'sg_task':task,
+        'sg_status_list': 'rev'
+        }
+    version = sg.create("Version",data)
+    sg.upload("Version", version['id'], orgImage, 'sg_uploaded_movie_image')
+    sg.upload_thumbnail("Version",version['id'],orgImage)
+
+
+def uploadShotVersionImage(sg, project_id, shot_code, task, basename, orgImage):
+    shot = sg.find_one("Shot",[['project','is',{'type':'Project','id':project_id}],['code','is',shot_code]],['code'])
+
+    task = sg.find_one("Task",[['project','is',{'type':'Project','id':project_id}],['entity','is',shot],['content','is',task]])
+
+    data = {'project':{'type':'Project','id':project_id},
+        'code': basename,
+        'sg_path_to_movie': orgImage,
+        'entity':shot,
+        'sg_task':task,
+        'sg_status_list': 'rev'
+        }
+    version = sg.create("Version",data)
+    sg.upload("Version", version['id'], orgImage, 'sg_uploaded_movie_image')
+    sg.upload_thumbnail("Version",version['id'],orgImage)    

@@ -73,19 +73,25 @@ void SelectFileDialog::clickSelectFile()
     selectedFile = QFileDialog::getOpenFileName(this,"Select File",".","movie (*.mov *.mp4 *.avi);;image (*.jpg *.jpeg *.png)");
     QFileInfo check_file(selectedFile);
     if (check_file.exists() && check_file.isFile()) {
-        messageWindow->append("Selected File : " + selectedFile);
-        messageWindow->append("Start Transecoding........");
+
         disconnect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickSelectFile()));
         connect(fileSelectBtn,SIGNAL(clicked(bool)),this,SLOT(clickCancel()));
+        messageWindow->append("Selected File : " + selectedFile);
+        messageWindow->append("Start Transecoding........");
         fileSelectBtn->setText("Cancel");
 //        thread = new JobThread(core, this);
 //        thread->start();
 //        QString
-
-        transcodingStep = 0;
-        outputFile.clear();
-        core->setSelectedFile(selectedFile);
-        transeCodingProcess();
+        QString suffix = check_file.suffix().toLower();
+        if(suffix == "mov" || suffix == "mp4" || suffix == "avi"){
+            transcodingStep = 0;
+            outputFile.clear();
+            core->setSelectedFile(selectedFile);
+            transeCodingProcess();
+        }else if(suffix == "jpg" || suffix == "jpeg" || "png"){
+            core->setSelectedFile(selectedFile);
+            imageCodingProcess();
+        }
 //        process->start("ffmpeg -i "+selectedFile+" -f mp4 ./test.mp4");
 //        process->waitForFinished();
 
@@ -178,6 +184,7 @@ void SelectFileDialog::transeCodingProcess()
                     fileSelectBtn->setDisabled(true);
                     messageWindow->append("Uploading Review Version");
                     core->uploadMovie(outputFile, baseName);
+                    QMessageBox::information(this,selectedFile, "Shotgun Rewview Version Uploaded",QMessageBox::Ok);
                     clickCancel();
                 }else{
                     clickCancel();
@@ -187,5 +194,23 @@ void SelectFileDialog::transeCodingProcess()
 
         case 4:
             break;
+    }
+}
+
+void SelectFileDialog::imageCodingProcess()
+{
+    QFileInfo fileInfo(selectedFile);
+    QString baseName = fileInfo.baseName();
+    int select = QMessageBox::warning(this,"Warnign","Shotgun에 업로드 하시겠습니까?\n 업로드 중에는 취소 할수 없습니다.",QMessageBox::Yes | QMessageBox::No);
+    if(select == QMessageBox::Yes)
+    {
+        qDebug() << "OK button Click";
+        fileSelectBtn->setDisabled(true);
+        messageWindow->append("Uploading Review Version");
+//        core->uploadMovie(outputFile, baseName);
+        core->uploadImage(baseName);
+        QMessageBox::information(this,selectedFile, "Shotgun Rewview Version Uploaded",QMessageBox::Ok);
+    }else{
+        clickCancel();
     }
 }

@@ -230,7 +230,7 @@ bool Core::uploadMovie(QStringList outputFile, QString basename)
 {
     if(selectedElement == ASSET)
     {
-        qDebug() << "Shot Version upLoad";
+        qDebug() << "Asset Version upLoad";
         pFunc = PyObject_GetAttrString(pModule,"uploadAssetVersion");
         PyObject *pArgs = PyTuple_New(9);
         PyObject *projectID = PyInt_FromSize_t(selectedProject);
@@ -277,6 +277,63 @@ bool Core::uploadMovie(QStringList outputFile, QString basename)
         PyTuple_SetItem(pArgs,6,mp4);
         PyTuple_SetItem(pArgs,7,webm);
         PyTuple_SetItem(pArgs,8,thumbnail);
+
+        PyObject *result = PyObject_CallObject(pFunc,pArgs);
+        qDebug() << "upload fin";
+    }
+    return true;
+}
+
+bool Core::uploadImage(QString basename)
+{
+    qDebug() << "upload Image Func run";
+    if(selectedElement == ASSET){
+        qDebug() << "Asset Version upLoad";
+        pFunc = PyObject_GetAttrString(pModule,"uploadAssetVersionImage");
+        PyObject *pArgs = PyTuple_New(6);
+        PyObject *projectID = PyInt_FromSize_t(selectedProject);
+        PyObject *assetCode = PyString_FromString(centerViewCurrent.toLocal8Bit());
+        PyObject *taskContent = PyString_FromString(rightViewCurrent.toLocal8Bit());
+        PyObject *pybasename = PyString_FromString(basename.toLocal8Bit());
+        PyObject *orgImage = PyString_FromString(selectedFile.toLocal8Bit());
+//        PyObject *mp4 = PyString_FromString(outputFile.at(0).toLocal8Bit());
+//        PyObject *webm = PyString_FromString(outputFile.at(1).toLocal8Bit());
+//        PyObject *thumbnail = PyString_FromString(outputFile.at(2).toLocal8Bit());
+
+        PyTuple_SetItem(pArgs,0,pSG);
+        PyTuple_SetItem(pArgs,1,projectID);
+        PyTuple_SetItem(pArgs,2,assetCode);
+        PyTuple_SetItem(pArgs,3,taskContent);
+        PyTuple_SetItem(pArgs,4,pybasename);
+        PyTuple_SetItem(pArgs,5,orgImage);
+//        PyTuple_SetItem(pArgs,6,mp4);
+//        PyTuple_SetItem(pArgs,7,webm);
+//        PyTuple_SetItem(pArgs,8,thumbnail);
+
+        PyObject *result = PyObject_CallObject(pFunc,pArgs);
+        qDebug() << "upload fin";
+    }else if(selectedElement == SHOT){
+        qDebug() << "Asset Version upLoad";
+        pFunc = PyObject_GetAttrString(pModule,"uploadShotVersionImage");
+        PyObject *pArgs = PyTuple_New(6);
+        PyObject *projectID = PyInt_FromSize_t(selectedProject);
+        PyObject *shotCode = PyString_FromString(centerViewCurrent.toLocal8Bit());
+        PyObject *taskContent = PyString_FromString(rightViewCurrent.toLocal8Bit());
+        PyObject *pybasename = PyString_FromString(basename.toLocal8Bit());
+        PyObject *orgImage = PyString_FromString(selectedFile.toLocal8Bit());
+//        PyObject *mp4 = PyString_FromString(outputFile.at(0).toLocal8Bit());
+//        PyObject *webm = PyString_FromString(outputFile.at(1).toLocal8Bit());
+//        PyObject *thumbnail = PyString_FromString(outputFile.at(2).toLocal8Bit());
+
+        PyTuple_SetItem(pArgs,0,pSG);
+        PyTuple_SetItem(pArgs,1,projectID);
+        PyTuple_SetItem(pArgs,2,shotCode);
+        PyTuple_SetItem(pArgs,3,taskContent);
+        PyTuple_SetItem(pArgs,4,pybasename);
+        PyTuple_SetItem(pArgs,5,orgImage);
+//        PyTuple_SetItem(pArgs,6,mp4);
+//        PyTuple_SetItem(pArgs,7,webm);
+//        PyTuple_SetItem(pArgs,8,thumbnail);
 
         PyObject *result = PyObject_CallObject(pFunc,pArgs);
         qDebug() << "upload fin";
