@@ -177,14 +177,14 @@ void SelectFileDialog::transeCodingProcess()
 
         case 3:
             {
-                int select = QMessageBox::warning(this,"Warnign","Shotgunì— ì—…ë¡œë“œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?\n ì—…ë¡œë“œ ì¤‘ì—ëŠ” ì·¨ì†Œ í• ìˆ˜ ì—†ìŠµë‹ˆë‹¤.",QMessageBox::Yes | QMessageBox::No);
+                int select = QMessageBox::warning(this,"Warnign",QString::fromLocal8Bit("Shotgun¿¡ ¾÷·Îµå ÇÏ½Ã°Ú½À´Ï±î?\n ¾÷·Îµå Áß¿¡´Â Ãë¼Ò ÇÒ¼ö ¾ø½À´Ï´Ù."),QMessageBox::Yes | QMessageBox::No);
                 if(select == QMessageBox::Yes)
                 {
                     qDebug() << "OK button Click";
                     fileSelectBtn->setDisabled(true);
                     messageWindow->append("Uploading Review Version");
                     core->uploadMovie(outputFile, baseName);
-                    QMessageBox::information(this,selectedFile, "Shotgun Rewview Version Uploaded",QMessageBox::Ok);
+                    QMessageBox::information(this,selectedFile, "Shotgun Review Version Uploaded",QMessageBox::Ok);
                     clickCancel();
                 }else{
                     clickCancel();
@@ -201,7 +201,7 @@ void SelectFileDialog::imageCodingProcess()
 {
     QFileInfo fileInfo(selectedFile);
     QString baseName = fileInfo.baseName();
-    int select = QMessageBox::warning(this,"Warnign","Shotgunì— ì—…ë¡œë“œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?\n ì—…ë¡œë“œ ì¤‘ì—ëŠ” ì·¨ì†Œ í• ìˆ˜ ì—†ìŠµë‹ˆë‹¤.",QMessageBox::Yes | QMessageBox::No);
+    int select = QMessageBox::warning(this,"Warnign",QString::fromLocal8Bit("Shotgun¿¡ ¾÷·Îµå ÇÏ½Ã°Ú½À´Ï±î?\n ¾÷·Îµå Áß¿¡´Â Ãë¼Ò ÇÒ¼ö ¾ø½À´Ï´Ù."),QMessageBox::Yes | QMessageBox::No);
     if(select == QMessageBox::Yes)
     {
         qDebug() << "OK button Click";
@@ -209,7 +209,7 @@ void SelectFileDialog::imageCodingProcess()
         messageWindow->append("Uploading Review Version");
 //        core->uploadMovie(outputFile, baseName);
         core->uploadImage(baseName);
-        QMessageBox::information(this,selectedFile, "Shotgun Rewview Version Uploaded",QMessageBox::Ok);
+        QMessageBox::information(this,selectedFile, "Shotgun Review Version Uploaded",QMessageBox::Ok);
     }else{
         clickCancel();
     }

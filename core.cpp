@@ -35,10 +35,13 @@ Core::~Core()
 
 bool Core::connectSite(QString site, QString login, QString passwd)
 {
+//    qDebug() << "core Class Run";
     PyObject *pName = PyString_FromString("run");
+//    qDebug() << "PyObject Create";
     pModule = PyImport_Import(pName);
+//    qDebug() << "run file Import";
     pFunc = PyObject_GetAttrString(pModule,"connect");
-    qDebug() << site << login << passwd;
+//    qDebug() << site << login << passwd;
 
     this->login = login;
 

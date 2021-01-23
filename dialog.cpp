@@ -56,6 +56,7 @@ void Dialog::setConnnectBtnDisable()
 
 void Dialog::connectSite()
 {
+//    qDebug()<< "console test";
     if(core->connectSite(urlEdit->text(),loginEdit->text(),passwdEdit->text()))
     {
         this->hide();
